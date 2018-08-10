@@ -4,7 +4,7 @@ This work is our scientific research.
 
 ## Problem
 
-The tracking algorithm failed to work. For more details, please carefully watch demo.
+The tracking algorithm failed to work. For more details, please carefully watch demo(Here is output.avi).
 
 Refer to [this](https://www.learnopencv.com/object-tracking-using-opencv-cpp-python/) to learn more about tracker API in opencv.
 
