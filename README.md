@@ -34,4 +34,4 @@ Refer to [this](https://www.learnopencv.com/object-tracking-using-opencv-cpp-pyt
   
 The kernel code is in KCF.py and the KCF.ipynb file is friendly to read. 
   
-Pull request if you find some bug or you fix the problem.
+Pull request if you fix the problem or find some bugs.
