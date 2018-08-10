@@ -30,8 +30,8 @@ Refer to [this](https://www.learnopencv.com/object-tracking-using-opencv-cpp-pyt
 
   Download files from [here](https://pan.baidu.com/s/1vRT3Iwb5KONtWo85rzUvJg), password pk5v.
   
-  ## Coding
+## Coding
   
-  The kernel code is in KCF.py and the KCF.ipynb file is friendly to read. 
+The kernel code is in KCF.py and the KCF.ipynb file is friendly to read. 
   
-  Pull request if you find some bug or you fix the problem.
+Pull request if you find some bug or you fix the problem.
