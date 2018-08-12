@@ -12,23 +12,23 @@ Refer to [this](https://www.learnopencv.com/object-tracking-using-opencv-cpp-pyt
 
 `NOTE`:pip or pip3 depend on your environment, and you can install tensorflow through anaconda, referring to [this](https://www.tensorflow.org/install/install_linux)
 
-* Tensorflow installation.
+* Tensorflow installation
 
   pip3 install tensorflow, refer to [this](https://www.tensorflow.org/install/install_linux#installing_with_native_pip) for more details.
 
 * Opncv and opencv-contrib installation
 
-  pip3 install opencv-contrib-python, refer to [this](https://pypi.org/project/opencv-python/)
+  pip3 install opencv-contrib-python, refer to [this](https://pypi.org/project/opencv-python/).
 
   Learn more about the difference bewteen opencv and opencv-contrib, refer to [this](https://github.com/opencv/opencv_contrib). 
 
-* Darknet installation.
+* Darknet installation
 
-  Refer to [this](https://github.com/thtrieu/darkflow)
+  Refer to [this](https://github.com/thtrieu/darkflow).
 
-* Files
+* File
 
-  Download files from [here](https://pan.baidu.com/s/1vRT3Iwb5KONtWo85rzUvJg), password pk5v.
+  Download yolo.weights file from [here](https://pan.baidu.com/s/1vRT3Iwb5KONtWo85rzUvJg), password pk5v. And place the file in right /bin/.
   
 ## Coding
   
