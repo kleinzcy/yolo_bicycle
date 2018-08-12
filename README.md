@@ -28,7 +28,7 @@ Refer to [this](https://www.learnopencv.com/object-tracking-using-opencv-cpp-pyt
 
 * File
 
-  Download yolo.weights file from [here](https://pan.baidu.com/s/1vRT3Iwb5KONtWo85rzUvJg), password pk5v. And place the file in right /bin/.
+  Download yolo.weights file from [here](https://pan.baidu.com/s/1vRT3Iwb5KONtWo85rzUvJg), password pk5v. And place the file in /bin/.
   
 ## Coding
   
