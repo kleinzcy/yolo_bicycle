@@ -1,17 +1,12 @@
-
+#! /usr/bin/env python
 # coding: utf-8
-
-# In[4]:
-
 
 import cv2
 import sys
 from yolo_bicycle import object_detection
 
 
-# object tracking algorithm, for more details, refer to [this](https://www.learnopencv.com/object-tracking-using-opencv-cpp-python/#opencv-tracking-api)
-
-# In[5]:
+# object tracking algorithm, for more details, refer to https://www.learnopencv.com/object-tracking-using-opencv-cpp-python/#opencv-tracking-api
 
 
 def object_tracking(filename="videos/riding.mp4"):
@@ -36,10 +31,8 @@ def object_tracking(filename="videos/riding.mp4"):
     if not ok:
         print('Cannot read video file')
         sys.exit()
-     
-    # Define an initial bounding box
  
-    # Uncomment the line below to select a different bounding box
+    # initial bounding box through drakflow.
     bbox = object_detection(frame)
  
     # Initialize tracker with first frame and bounding box
@@ -85,9 +78,6 @@ def object_tracking(filename="videos/riding.mp4"):
     out.release()
     video.release()
     cv2.destroyAllWindows()
-
-
-# In[7]:
 
 
 object_tracking(filename='videos/riding2.mp4')
