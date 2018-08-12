@@ -1,10 +1,7 @@
-
+#! /usr/bin/env python
 # coding: utf-8
 
 # 导入相关库，其中TFNet为darkflow文件中的。
-
-# In[1]:
-
 
 import matplotlib.pyplot as plt 
 import numpy as np 
@@ -13,14 +10,10 @@ import cv2
 import pprint as pp
 
 
-# model为模型的配置文件，load为模型的参数文件，需要自己训练更改。cfg与bin都在yolo_bicycle文件目录下。
-
-# 输入为原图片（并不是地址），在原图片上标注预测物体的位置。
-
-# In[3]:
-
-
 def boxing(original_img, predictions):
+        """
+        Ignore this function, because it is useless.
+        """
         newImage = np.copy(original_img)
 
         for result in predictions:
@@ -39,10 +32,10 @@ def boxing(original_img, predictions):
         return newImage
 
 
-# In[ ]:
-
-
 def result_person(results):
+    """
+    obtain the specific bounding box from results. In this instance, label is person.
+    """
     for result in results:
         if result['label'] == 'person' and result['confidence'] > 0.5:
             bbox = (result['topleft']['x'], result['topleft']['y'], 
@@ -50,20 +43,13 @@ def result_person(results):
                     result['bottomright']['y'] - result['topleft']['y'])
             return bbox
 
-
-# In[12]:
-
-
+        
 def object_detection(original_img):
+    """
+    object detection. the options can be changed according to platform. For more details, refer to darkflow.
+    """
     options = {"model": "cfg/yolo.cfg", "load": "bin/yolo.weights", "threshold": 0.1}
     tfnet = TFNet(options)
     original_img = cv2.cvtColor(original_img, cv2.COLOR_BGR2RGB)
     results = tfnet.return_predict(original_img)
     return result_person(results)
-
-    """fig, ax = plt.subplots(figsize=(10, 10))
-    ax.imshow(original_img)
-
-    fig, ax = plt.subplots(figsize=(20, 10))
-    ax.imshow(boxing(original_img, results))"""
-
