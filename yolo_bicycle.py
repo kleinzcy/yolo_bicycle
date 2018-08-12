@@ -1,7 +1,6 @@
 #! /usr/bin/env python
 # coding: utf-8
 
-# 导入相关库，其中TFNet为darkflow文件中的。
 
 import matplotlib.pyplot as plt 
 import numpy as np 
