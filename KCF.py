@@ -3,7 +3,7 @@
 
 import cv2
 import sys
-from yolo_bicycle import object_detection
+from object_detection import object_detection
 
 
 # object tracking algorithm, for more details, refer to https://www.learnopencv.com/object-tracking-using-opencv-cpp-python/#opencv-tracking-api
@@ -31,13 +31,19 @@ def object_tracking(filename="videos/riding.mp4"):
     if not ok:
         print('Cannot read video file')
         sys.exit()
+     
+    # Define an initial bounding box
  
-    # initial bounding box through drakflow.
-    bbox = object_detection(frame)
+    # Uncomment the line below to select a different bounding box
+    bboxes = object_detection(frame)
  
-    # Initialize tracker with first frame and bounding box
-    tracker = cv2.TrackerKCF_create()
-    ok = tracker.init(frame, bbox)
+    # Initialize mutiltracker with first frame and bounding box
+    trackerType = 'CSRT'
+    multiTracker = cv2.MultiTracker_create()
+    colors = []
+    for bbox in bboxes:
+        multiTracker.add(cv2.TrackerCSRT_create(), frame, bbox)
+        colors.append((randint(0, 255), randint(0, 255), randint(0, 255)))
     
     ret = True
     while ret:
@@ -50,23 +56,24 @@ def object_tracking(filename="videos/riding.mp4"):
         timer = cv2.getTickCount()
  
         # Update tracker
-        ok, bbox = tracker.update(frame)
+        success, bboxes = multiTracker.update(frame)
  
         # Calculate Frames per second (FPS)
-        fps = cv2.getTickFrequency() / (cv2.getTickCount() - timer);
+        fps = cv2.getTickFrequency() / (cv2.getTickCount() - timer)
  
         # Draw bounding box
-        if ok:
+        if success:
             # Tracking success
-            p1 = (int(bbox[0]), int(bbox[1]))
-            p2 = (int(bbox[0] + bbox[2]), int(bbox[1] + bbox[3]))
-            new_frame = cv2.rectangle(frame, p1, p2, (255,0,0), 2, 1)
+            for i, newbox in enumerate(bboxes):
+                p1 = (int(newbox[0]), int(newbox[1]))
+                p2 = (int(newbox[0] + newbox[2]), int(newbox[1] + newbox[3]))
+                new_frame = cv2.rectangle(frame, p1, p2, colors[i], 2, 1)
         else :
             # Tracking failure
             cv2.putText(new_frame, "Tracking failure detected", (100,80), cv2.FONT_HERSHEY_SIMPLEX, 0.75,(0,0,255),2)
  
         # Display tracker type on frame
-        cv2.putText(new_frame, tracker_types[2] + " Tracker", (100,20), cv2.FONT_HERSHEY_SIMPLEX, 0.75, (50,170,50),2);
+        cv2.putText(new_frame, trackerType + " Tracker", (100,20), cv2.FONT_HERSHEY_SIMPLEX, 0.75, (50,170,50),2);
      
         # Display FPS on frame
         cv2.putText(new_frame, "FPS : " + str(int(fps)), (100,50), cv2.FONT_HERSHEY_SIMPLEX, 0.75, (50,170,50), 2);
