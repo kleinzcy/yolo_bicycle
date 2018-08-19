@@ -64,7 +64,7 @@ class MultiTracker():
         width = video.get(cv2.CAP_PROP_FRAME_WIDTH)   
         height = video.get(cv2.CAP_PROP_FRAME_HEIGHT) 
         fourcc = cv2.VideoWriter_fourcc(*'DIVX')
-        out = cv2.VideoWriter('./'+self.trackerType+'.avi',fourcc, 20.0, (int(width), int(height)))
+        out = cv2.VideoWriter('./output/'+self.trackerType+'.avi',fourcc, 20.0, (int(width), int(height)))
 
         # Exit if video not opened.
         if not video.isOpened():
