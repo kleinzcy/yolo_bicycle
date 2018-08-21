@@ -4,7 +4,7 @@ This work is our scientific research.
 
 ## Problem
 
-The tracking algorithm failed to work. For more details, please carefully watch demo(Here is output.avi).
+Our work is hard to apply to complex scene.
 
 Refer to [this](https://www.learnopencv.com/object-tracking-using-opencv-cpp-python/) to learn more about tracker API in opencv.
 
@@ -36,6 +36,6 @@ Refer to [this](https://www.learnopencv.com/object-tracking-using-opencv-cpp-pyt
   
 ## Coding
   
-The kernel code is in KCF.py and the KCF.ipynb file is friendly to read. 
+The kernel code is in tracker.py and the tracker.ipynb file is friendly to read. 
   
 Pull request if you fix the problem or find some bugs.
