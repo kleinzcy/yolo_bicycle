@@ -44,7 +44,8 @@ class MultiTracker():
     
     def create_MutilTracker(self, frame):
         # obtain box through yolo
-        bboxes = self.net.object_detection(frame)
+        bboxes_person, bboxes_bicycle = self.net.object_detection(frame)
+        bboxes = overlap(bboxes_person, bboxes_bicycle)
         
         self.colors = []
         # Initialize mutiltracker with first frame and bounding box
@@ -102,7 +103,8 @@ class MultiTracker():
                 for i, newbox in enumerate(bboxes):
                     p1 = (int(newbox[0]), int(newbox[1]))
                     p2 = (int(newbox[0] + newbox[2]), int(newbox[1] + newbox[3]))
-                    new_frame = cv2.rectangle(frame, p1, p2, self.colors[i], 2, 1)
+                    j = i%2
+                    new_frame = cv2.rectangle(frame, p1, p2, self.colors[j], 2, 1)
             else :
                 # Tracking failure
                 new_frame = cv2.putText(frame, "Tracking failure detected", (100,80), cv2.FONT_HERSHEY_SIMPLEX,0.75,(0,0,255),2)
