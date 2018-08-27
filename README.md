@@ -25,10 +25,6 @@ Refer to [this](https://www.learnopencv.com/object-tracking-using-opencv-cpp-pyt
 * Darknet installation
 
   Refer to [this](https://github.com/thtrieu/darkflow).
-
-* File
-
-  Download yolo.weights file from [here](https://pan.baidu.com/s/1vRT3Iwb5KONtWo85rzUvJg), password pk5v. And place the file in /bin/.
   
 * Update .pb files
 
