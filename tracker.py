@@ -5,6 +5,9 @@ import cv2
 import sys
 from object_detection import tfnet
 from random import randint
+from overlap_ratio import overlap_one
+from overlap_ratio import detect_bicycle_two
+
 
 class MultiTracker():
     """the tracker type depend on your choice"""
@@ -42,11 +45,15 @@ class MultiTracker():
         return tracker  
     
     
-    def create_MutilTracker(self, frame):
+    def create_MutilTracker(self, frame, confidence = 0.02,detect_way = 1):
         # obtain box through yolo
         bboxes_person, bboxes_bicycle = self.net.object_detection(frame)
-        bboxes = overlap(bboxes_person, bboxes_bicycle)
-        
+        if detect_way is 1:
+            bboxes = overlap_one(bboxes_person, bboxes_bicycle, confidence)
+            
+        if detect_way is 2:
+            bboxes = detect_bicycle_two(bboxes_person, bboxes_bicycle, confidence)
+                
         self.colors = []
         # Initialize mutiltracker with first frame and bounding box
         multiTracker = cv2.MultiTracker_create()
@@ -57,7 +64,7 @@ class MultiTracker():
     
     
     """object detection every num frame"""
-    def tracking(self, num=30, filename="videos/riding.mp4"):
+    def tracking(self, num=30, filename="videos/riding.mp4",confidence=0.02,detect_way=1):
         # Read video
         video = cv2.VideoCapture(filename)
 
@@ -83,7 +90,7 @@ class MultiTracker():
             # inintinal multitracker
             num_frame += 1
             if num_frame % num == 0:
-                multitracker = self.create_MutilTracker(frame)
+                multitracker = self.create_MutilTracker(frame,confidence)
                 num_frame = 0
                 continue
 
@@ -96,29 +103,31 @@ class MultiTracker():
 
             # Calculate Frames per second (FPS)
             fps = cv2.getTickFrequency() / (cv2.getTickCount() - timer)
-
+            
+            #new_frame = []
+            #global new_frame
             # Draw bounding box
-            if success:
+            if success: 
                 # Tracking success
                 for i, newbox in enumerate(bboxes):
                     p1 = (int(newbox[0]), int(newbox[1]))
                     p2 = (int(newbox[0] + newbox[2]), int(newbox[1] + newbox[3]))
                     j = i%2
-                    new_frame = cv2.rectangle(frame, p1, p2, self.colors[j], 2, 1)
+                    self.new_frame = cv2.rectangle(frame, p1, p2, self.colors[j], 2, 1)
             else :
                 # Tracking failure
-                new_frame = cv2.putText(frame, "Tracking failure detected", (100,80), cv2.FONT_HERSHEY_SIMPLEX,0.75,(0,0,255),2)
-
+                self.new_frame = cv2.putText(frame, "Tracking failure detected", (100,80), cv2.FONT_HERSHEY_SIMPLEX,0.75,(0,0,255),2)
+            
             # Display tracker type on frame
-            cv2.putText(new_frame, self.trackerType + " Tracker", (100,20), cv2.FONT_HERSHEY_SIMPLEX, 0.75, (50,170,50),2);
+            cv2.putText(self.new_frame, self.trackerType + " Tracker", (100,20), cv2.FONT_HERSHEY_SIMPLEX, 0.75, (50,170,50),2);
 
             # Display FPS on frame
-            cv2.putText(new_frame, "FPS : " + str(int(fps)), (100,50), cv2.FONT_HERSHEY_SIMPLEX, 0.75, (50,170,50), 2);
+            cv2.putText(self.new_frame, "FPS : " + str(int(fps)), (100,50), cv2.FONT_HERSHEY_SIMPLEX, 0.75, (50,170,50), 2);
 
             # Display result
             cv2.namedWindow("Video") 
-            out.write(new_frame)
-            cv2.imshow("Tracking", new_frame)
+            out.write(self.new_frame)
+            cv2.imshow("Tracking", self.new_frame)
             k = cv2.waitKey(1) & 0xff
             if k == 27 : 
                 break
@@ -131,3 +140,4 @@ class MultiTracker():
 if __name__=='__main__':
     object_tracker = MultiTracker('MOSSE')
     object_tracker.tracking(num=100)
+
