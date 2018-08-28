@@ -32,6 +32,18 @@ Refer to [this](https://www.learnopencv.com/object-tracking-using-opencv-cpp-pyt
   
 ## Coding
   
-The kernel code is in tracker.py and the tracker.ipynb file is friendly to read. 
+The kernel code is in tracker.py  is friendly to read.
+
+judge.py is used to determined the statement of the current frame
+
+object_detection.py is used to detect person and bicycle for current frame by yolo
+
+overlap_ratio.py is used to count the coincidence and match the bike to the person with the most overlap
   
+if you want to run this item, you just need enter the code in the terminal:
+
+'python tracker.py' or 'python demo.py'
+
+the output in the terminal is the coincidence of current frame
+
 Pull request if you fix the problem or find some bugs.
