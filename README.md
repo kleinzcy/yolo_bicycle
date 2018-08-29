@@ -25,6 +25,10 @@ Refer to [this](https://www.learnopencv.com/object-tracking-using-opencv-cpp-pyt
 * Darknet installation
 
   Refer to [this](https://github.com/thtrieu/darkflow).
+
+* File
+
+  Download yolo.weights file from [here](https://pan.baidu.com/s/1vRT3Iwb5KONtWo85rzUvJg), password pk5v. And place the file in /bin/.
   
 * Update .pb files
 
@@ -42,8 +46,8 @@ overlap_ratio.py is used to count the coincidence and match the bike to the pers
   
 if you want to run this item, you just need enter the code in the terminal:
 
-'python tracker.py' or 'python demo.py'
+`python tracker.py` or `python demo.py`
 
-the output in the terminal is the coincidence of current frame
+Our project logic diagram is as ![follow](http://t.cn/RFUAEVI)
 
 Pull request if you fix the problem or find some bugs.
