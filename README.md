@@ -48,6 +48,6 @@ if you want to run this item, you just need enter the code in the terminal:
 
 `python tracker.py` or `python demo.py`
 
-Our project logic diagram is as ![follow](http://t.cn/RFUAEVI)
+Our project logic diagram is as [follow](http://t.cn/RFUAEVI)
 
 Pull request if you fix the problem or find some bugs.
