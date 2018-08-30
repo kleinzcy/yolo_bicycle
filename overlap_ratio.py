@@ -25,7 +25,7 @@ def overlap(bbox_person, bbox_bicycle):
         ratioes.append(max_overlap)
 
         bbox.append(bbox_transform(max_person))
-    print(ratioes)
+    #print(ratioes)
     return bbox
 
 
@@ -64,4 +64,4 @@ def bbox_transform(bbox):
         new_bbox = (bbox[0], bbox[1], bbox[2] - bbox[0], bbox[3] - bbox[1])
         return new_bbox
     else:
-        return (0, 0, 0, 0)
+        return None

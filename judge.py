@@ -14,7 +14,7 @@ def Judgement(bboxes, confidence):
             result = intersect(inverse_transform(bboxes[2*(current_num)]),inverse_transform(bboxes[2*(current_num)+1]))
             current_num += 1
             ratioes.append(result)
-            print(result)
+            #print(result)
             
     if len(ratioes) > 0:
         for ratioe in ratioes:
@@ -31,4 +31,4 @@ def inverse_transform(bbox):
         new_bbox = (bbox[0], bbox[1], bbox[2] + bbox[0], bbox[3] + bbox[1])
         return new_bbox
     else:
-        return (0,0,0,0)
+        return None
