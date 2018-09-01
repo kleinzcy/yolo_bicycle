@@ -53,9 +53,8 @@ class MultiTracker():
         bboxes = overlap(bboxes_person,bboxes_bicycle)
         return bboxes
     
+    
     def create_MutilTracker(self, frame, bboxes):
-        
-        self.colors = []
         # Initialize mutiltracker with first frame and bounding box
         multiTracker = cv2.MultiTracker_create()
         for bbox in bboxes:
@@ -127,7 +126,7 @@ class MultiTracker():
                     bicycle_groups = int(len(self.bboxes) / 2)
                     
                     #print(bicycle_groups)
-                    
+                    self.colors = []
                     while bicycle_group < bicycle_groups:
                         current_group = []
                         multitrackers = []
@@ -167,8 +166,7 @@ class MultiTracker():
                         for i, newbox in enumerate(update_bboxes[bboxes_num]):
                             p1 = (int(newbox[0]), int(newbox[1]))
                             p2 = (int(newbox[0] + newbox[2]), int(newbox[1] + newbox[3]))
-                            j = i%2
-                            self.new_frame = cv2.rectangle(frame, p1, p2, self.colors[j], 2, 1)
+                            self.new_frame = cv2.rectangle(frame, p1, p2, self.colors[bboxes_num], 2, 1)
                     
                     bboxes_num +=1
                     #else :
