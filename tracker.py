@@ -7,7 +7,7 @@ from object_detection import tfnet
 from random import randint
 from overlap_ratio import overlap
 from judge import Judgement
-
+import os
 
 
 
@@ -72,8 +72,9 @@ class MultiTracker():
         width = video.get(cv2.CAP_PROP_FRAME_WIDTH)   
         height = video.get(cv2.CAP_PROP_FRAME_HEIGHT) 
         fourcc = cv2.VideoWriter_fourcc(*'DIVX')
+        if not os.path.exists('./output'):
+            os.mkdir('./output')
         out = cv2.VideoWriter('./output/'+self.trackerType+'.avi',fourcc, 20.0, (int(width), int(height)))
-        
         # Exit if video not opened.
         if not video.isOpened():
             print("Could not open video")
@@ -190,7 +191,8 @@ class MultiTracker():
         out.release()
         video.release()
         cv2.destroyAllWindows()
-               
+        
+        
 if __name__=='__main__':
     object_tracker = MultiTracker('MOSSE')
     object_tracker.tracking(num=100)
