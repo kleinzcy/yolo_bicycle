@@ -73,11 +73,9 @@ class MultiTracker():
         width = video.get(cv2.CAP_PROP_FRAME_WIDTH)   
         height = video.get(cv2.CAP_PROP_FRAME_HEIGHT) 
         fourcc = cv2.VideoWriter_fourcc(*'DIVX')
-        if os.path.exists('../output'):
-            out = cv2.VideoWriter('./output/'+self.trackerType+'.avi',fourcc, 20.0, (int(width), int(height)))
-            print("can't find the output file, the output video will be in the file where tracker.py locate")
-        else:
-            out = cv2.VideoWriter(self.trackerType+'.avi',fourcc, 20.0, (int(width), int(height)))
+        if not os.path.exists('./output'):
+            os.mkdir('./output')
+        out = cv2.VideoWriter('./output/'+self.trackerType+'.avi',fourcc, 20.0, (int(width), int(height)))
         # Exit if video not opened.
         if not video.isOpened():
             print("Could not open video")
@@ -195,6 +193,7 @@ class MultiTracker():
         out.release()
         video.release()
         cv2.destroyAllWindows()
+        
         
 if __name__=='__main__':
     object_tracker = MultiTracker('MOSSE')
