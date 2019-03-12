@@ -45,6 +45,8 @@ class MultiTracker():
             for t in trackerTypes:
               print(t)
 
+            raise NameError('trackers name error !')
+
         return tracker  
     
     def detection(self,frame):
@@ -52,7 +54,6 @@ class MultiTracker():
         bboxes_person, bboxes_bicycle = self.net.object_detection(frame)
         bboxes = overlap(bboxes_person,bboxes_bicycle)
         return bboxes
-    
     
     def create_MutilTracker(self, frame, bboxes):
         # Initialize mutiltracker with first frame and bounding box
@@ -62,11 +63,22 @@ class MultiTracker():
             self.colors.append((randint(0, 255), randint(0, 255), randint(0, 255)))
         return multiTracker
     
-    
+    def match(self):
+        pass
+
     """object detection every num frame"""
-    def tracking(self, num=30, wait_frame_num=30 , filename="videos/riding.mp4",confidence=0.02):
+    def tracking(self, num=30, wait_frame_num=30, filename="videos/riding.mp4", confidence=0.02, camera=False):
         # Read video
-        video = cv2.VideoCapture(filename)
+        # detect every num frame. wait wait_frame_num if there is no bicycle.we can define filename as camera.
+        if camera is not False:
+            video = cv2.VideoCapture(camera)
+        else:
+            video = cv2.VideoCapture(filename)
+
+        # Exit if video not opened.
+        if not video.isOpened():
+            print("Could not open video !")
+            sys.exit()
 
         # establish output file, the same as video.
         width = video.get(cv2.CAP_PROP_FRAME_WIDTH)   
@@ -75,11 +87,8 @@ class MultiTracker():
         if not os.path.exists('./output'):
             os.mkdir('./output')
         out = cv2.VideoWriter('./output/'+self.trackerType+'.avi',fourcc, 20.0, (int(width), int(height)))
-        # Exit if video not opened.
-        if not video.isOpened():
-            print("Could not open video")
-            sys.exit()
 
+        # define some variable using in the below
         ret = True
         num_frame = -1
         bicycle_flag = False
@@ -97,7 +106,8 @@ class MultiTracker():
             '''detect whether there is bicycle
                if not, wait 30 frame and detect again
                if there is, start analysing'''
-            
+
+            # To be honest, the logic is not clear enough.
             if bicycle_flag is False and no_bicycle_frame > 0:
                 no_bicycle_frame -= 1
             elif bicycle_flag is False and no_bicycle_frame <= 0:
@@ -112,10 +122,8 @@ class MultiTracker():
             #print(bicycle_flag)
             
             if bicycle_flag is True:
-                # inintinal multitracker                
-
+                # initinal multitracker
                 num_frame += 1
-                
                 if num_frame % num == 0:
                     
                     bicycle_group = 0
@@ -128,6 +136,8 @@ class MultiTracker():
                     
                     #print(bicycle_groups)
                     self.colors = []
+                    # 这里没有匹配车与人，后续增加一个车与人的匹配，根据重合度匹配。match
+                    # 这里创建了多个跟踪器，一个跟踪器跟踪一对人和车
                     while bicycle_group < bicycle_groups:
                         current_group = []
                         multitrackers = []
@@ -169,16 +179,17 @@ class MultiTracker():
                             p2 = (int(newbox[0] + newbox[2]), int(newbox[1] + newbox[3]))
                             self.new_frame = cv2.rectangle(frame, p1, p2, self.colors[bboxes_num], 2, 1)
                     
-                    bboxes_num +=1
+                    bboxes_num += 1
+                    # 这里需要处理跟踪失败，给一个提示即可。
                     #else :
                         # Tracking failure
                         #self.new_frame = cv2.putText(frame, "Tracking failure detected", (100,80), cv2.FONT_HERSHEY_SIMPLEX,0.75,(0,0,255),2)
                         
                 # Display tracker type on frame
-                cv2.putText(self.new_frame, self.trackerType + " Tracker", (100,20), cv2.FONT_HERSHEY_SIMPLEX, 0.75, (50,170,50),2);
+                cv2.putText(self.new_frame, self.trackerType + " Tracker", (100,20), cv2.FONT_HERSHEY_SIMPLEX, 0.75, (50,170,50),2)
 
                 # Display FPS on frame
-                cv2.putText(self.new_frame, "FPS : " + str(int(fps)), (100,50), cv2.FONT_HERSHEY_SIMPLEX, 0.75, (50,170,50), 2);
+                cv2.putText(self.new_frame, "FPS : " + str(int(fps)), (100,50), cv2.FONT_HERSHEY_SIMPLEX, 0.75, (50,170,50), 2)
 
                 # Display result
             cv2.namedWindow("Video") 

@@ -22,6 +22,7 @@ class tfnet():
         
     """process result, return two bboxes, one is persons, the other is bicycles"""
     def result_process(self):
+        # change according to the output of yolov3
         bboxes_person = []
         bboxes_bicycle = []
         for result in self.results:
@@ -35,6 +36,6 @@ class tfnet():
 
     def object_detection(self, original_img):
         original_img = cv2.cvtColor(original_img, cv2.COLOR_BGR2RGB)
-        self.rseults = dn.detect(net, meta, b"data/bedroom.jpg")
+        self.rseults = dn.detect(self.net, self.meta, b"data/bedroom.jpg")
         # self.results = self.tfnet.return_predict(original_img)
         return self.result_process()

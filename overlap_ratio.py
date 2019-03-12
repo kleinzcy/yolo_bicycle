@@ -1,5 +1,3 @@
-
-
 # coding: utf-8
 
 # calculate overlap ratio.
@@ -7,6 +5,7 @@
 """计算多个box的重合度，返回重合度大的人车组合。
     参数：人的bbox，车的bbox
     返回值：返回一个列表，包含多过重合度大的人车组合，其中人在车后面"""
+# 这里假设系统启动的时候，路口没有单独的车。
 def overlap(bbox_person, bbox_bicycle):
     bbox = []
     ratioes = []
@@ -41,7 +40,7 @@ def intersect(bbox1,bbox2):
     else:
         return False
 
-
+# question:为什么这里反复判断是否为None是应对跟踪失败吗？
 """计算两个矩形框的重合度"""
 def calculate_overlap(bbox1,bbox2):
     if bbox1 is not None and bbox2 is not None:
