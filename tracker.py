@@ -39,6 +39,7 @@ class MultiTracker():
         elif trackerType == trackerTypes[6]:
             tracker = cv2.TrackerCSRT_create()
         else:
+            # 这里应该主动抛出异常
             tracker = None
             print('Incorrect tracker name')
             print('Available trackers are:')
