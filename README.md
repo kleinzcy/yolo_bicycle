@@ -51,3 +51,10 @@ if you want to run this item, you just need enter the code in the terminal:
 Our project logic diagram is as [follow](http://t.cn/RFUAEVI)
 
 Pull request if you fix the problem or find some bugs.
+
+## Bug Info
+
+  File "/home/nvidia/Documents/yolo_bicycle/object_detection.py", line 29, in result_process
+    for result in self.results:
+TypeError: 'NoneType' object is not iterable
+
