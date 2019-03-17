@@ -4,38 +4,41 @@ import sys, os
 import time
 #print(os.getcwd())
 # the path below should be change according to the path of darknet
-sys.path.append(os.path.join('/home/spl/chuyutensor/darknet/','python/'))
+sys.path.append('/home/nvidia/Documents/darknet/')
 
 import darknet as dn
 import pdb
 
+os.chdir('/home/nvidia/Documents/darknet')
 class tfnet():
-    options = {"pbLoad": "built_graph/yolo-2c.pb", "metaLoad": "built_graph/yolo-2c.meta", "threshold": 0.1}
 
-    def __init__(self, options = options):
+
+    def __init__(self):
         start = time.time()
-        self.net = dn.load_net(b"cfg/yolov3.cfg", b"yolov3.weights", 0)
-        self.meta = dn.load_meta(b"cfg/coco.data")
+        self.net = dn.load_net(b"./bike_and_bicycle/yolov3-tiny.cfg", "./bike_and_bicycle/dataset/backup/yolov3-tiny_final.weights", 0)
+        self.meta = dn.load_meta(b"./bike_and_bicycle/voc.data")
         print(time.time() - start)
         # self.tfnet = TFNet(options)
-        self.results = None
+        # self.results = None
         
     """process result, return two bboxes, one is persons, the other is bicycles"""
-    def result_process(self):
+    def result_process(self, results):
         # change according to the output of yolov3
         bboxes_person = []
         bboxes_bicycle = []
-        for result in self.results:
-            bbox = (result['topleft']['x'], result['topleft']['y'], 
-                    result['bottomright']['x'], result['bottomright']['y'])
-            if result['label'] == 'person':
+        for result in results:
+            bbox = (result[2][0]-result[2][2]/2, result[2][1]-result[2][3]/2, 
+                    result[2][0]+result[2][2]/2, result[2][1]+result[2][3]/2)
+            if result[0] == 'person':
                 bboxes_person.append(bbox)
             else:
                 bboxes_bicycle.append(bbox)
         return bboxes_person, bboxes_bicycle
 
     def object_detection(self, original_img):
+        temp = b'tmp/temp.png'
         original_img = cv2.cvtColor(original_img, cv2.COLOR_BGR2RGB)
-        self.rseults = dn.detect(self.net, self.meta, b"data/bedroom.jpg")
-        # self.results = self.tfnet.return_predict(original_img)
-        return self.result_process()
+        cv2.imwrite(temp, original_img)
+        results = dn.detect(self.net, self.meta, temp)
+
+        return self.result_process(results)

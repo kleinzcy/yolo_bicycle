@@ -10,7 +10,7 @@ from judge import Judgement
 import os
 
 
-
+# os.chdir('/home/nvidia/Documents/yolo_bicycle/')
 class MultiTracker():
     """the tracker type depend on your choice"""
     def __init__(self, type):
@@ -71,10 +71,12 @@ class MultiTracker():
     def tracking(self, num=30, wait_frame_num=30, filename="videos/riding.mp4", confidence=0.02, camera=False):
         # Read video
         # detect every num frame. wait wait_frame_num if there is no bicycle.we can define filename as camera.
+
         if camera is not False:
             video = cv2.VideoCapture(camera)
         else:
             video = cv2.VideoCapture(filename)
+
 
         # Exit if video not opened.
         if not video.isOpened():
@@ -82,12 +84,14 @@ class MultiTracker():
             sys.exit()
 
         # establish output file, the same as video.
-        width = video.get(cv2.CAP_PROP_FRAME_WIDTH)   
+        width = video.get(cv2.CAP_PROP_FRAME_HEIGHT)   
         height = video.get(cv2.CAP_PROP_FRAME_HEIGHT) 
+        # width = video.set(cv2.cv.CV_CAP_PROP_FRAME_HEIGHT, 1080)
+        # video.set(cv2.cv.CV_CAP_PROP_FRAME_WIDTH, 1920) 
         fourcc = cv2.VideoWriter_fourcc(*'DIVX')
-        if not os.path.exists('./output'):
-            os.mkdir('./output')
-        out = cv2.VideoWriter('./output/'+self.trackerType+'.avi',fourcc, 20.0, (int(width), int(height)))
+        if not os.path.exists('/home/nvidia/Documents/yolo_bicycle/output'):
+            os.mkdir('/home/nvidia/Documents/yolo_bicycle/output')
+        out = cv2.VideoWriter('/home/nvidia/Documents/yolo_bicycle/output/'+self.trackerType+'.avi',fourcc, 20.0, (int(width), int(height)))
 
         # define some variable using in the below
         ret = True
